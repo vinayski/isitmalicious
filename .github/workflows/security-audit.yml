@@ -1,0 +1,44 @@
+name: Security Audit Skills
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '.github/skills/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - '.github/skills/**'
+  workflow_dispatch:
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    name: Audit Skills for Security Issues
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Run Security Audit
+        id: audit
+        run: |
+          echo "🔍 Running security audit on skills..."
+          node .github/skills/security-audit-skills.js .github/skills/
+          
+      - name: Security Audit Passed
+        if: success()
+        run: |
+          echo "✅ Security audit passed - no critical threats detected"
+          
+      - name: Security Audit Failed
+        if: failure()
+        run: |
+          echo "❌ Security audit failed - critical threats detected"
+          echo "Review the output above for details"
+          exit 1
