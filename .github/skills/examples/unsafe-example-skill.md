@@ -96,7 +96,7 @@ function generateSessionId() {
 ```javascript
 // VULNERABILITY: Dynamic module loading
 function loadModule(moduleName) {
-  const module = require(userInput);
+  const module = require(moduleName);
   return module;
 }
 ```

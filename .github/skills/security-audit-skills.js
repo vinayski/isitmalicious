@@ -21,7 +21,7 @@ const SECURITY_PATTERNS = {
     },
     {
       name: 'Path Traversal',
-      pattern: /\.\.[\/\\]|\.\.\\|\.{2,}\//g,
+      pattern: /\.\.[\/\\]|\.{2,}\//g,
       description: 'Path traversal pattern detected',
       remediation: 'Sanitize file paths and use path.resolve() or path.normalize() to prevent directory traversal attacks.'
     },
